@@ -10,14 +10,14 @@ namespace DefenseWar.Models
     {
         public Guid Id;
         public string Name;
-        public CharacterTypeEnum Type;
+        public EggTypeEnum EggType;
         public int Star;
 
-        public CharacterModel(Guid id, string name, CharacterTypeEnum type, int star)
+        public CharacterModel(Guid id, string name, EggTypeEnum eggType, int star)
         {
             Id = id;
             Name = name;
-            Type = type;
+            EggType = eggType;
             Star = star;
         }
     }

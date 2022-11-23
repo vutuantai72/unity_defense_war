@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DefenseWar.Models.Enum
 {
-    public enum CharacterTypeEnum
+    public enum RankTypeEnum
     {
-        Assasin,
-        Barbarian,
-        Butcher
+        Common,
+        Rare,
+        Epic,
+        Legendary
     }
 }

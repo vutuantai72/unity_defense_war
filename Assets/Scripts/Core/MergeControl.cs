@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace DefenseWar.Core
 {
-    public class MergeControl : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
+    public class MergeControl : MonoBehaviour
     {
         private Vector2 mousePosition;
 
@@ -18,14 +18,7 @@ namespace DefenseWar.Core
 
         public static string nameSpawnPoint;
 
-        private RectTransform rectTransform;
-
-        private void Awake()
-        {
-            rectTransform = GetComponent<RectTransform>();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
+        private void OnMouseDown()
         {
             mouseButtonReleased = false;
             offsetX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
@@ -33,14 +26,13 @@ namespace DefenseWar.Core
             positionSpawnPoint = transform.position;
         }
 
-        public void OnDrag(PointerEventData eventData)
+        private void OnMouseDrag()
         {
-            //mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //transform.position = new Vector2(mousePosition.x - offsetX, mousePosition.y - offsetY);
-            rectTransform.anchoredPosition += eventData.delta;
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector2(mousePosition.x - offsetX, mousePosition.y - offsetY);
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        private void OnMouseUp()
         {
             mouseButtonReleased = true;
 
@@ -58,8 +50,12 @@ namespace DefenseWar.Core
                 }
                 else
                 {
-                    if (positionSpawnPoint != Vector2.zero)
-                        transform.position = positionSpawnPoint;
+                    foreach (Transform character in spawnPoint.transform)
+                    {
+
+                        if (positionSpawnPoint != Vector2.zero)
+                            transform.position = positionSpawnPoint;
+                    }
                 }
             }
             else
@@ -71,7 +67,6 @@ namespace DefenseWar.Core
         private void OnTriggerStay2D(Collider2D collision)
         {
             //Debug.LogError($"TriggerStay: {collision.transform.name}");
-            //nameSpawnPoint = collision.transform.name != "NotSpawnPoints" ? collision.transform.name : string.Empty;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

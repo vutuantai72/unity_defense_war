@@ -11,19 +11,21 @@ namespace DefenseWar.Core
     {
         [SerializeField] public string Id = Guid.NewGuid().ToString();
         [SerializeField] public string Name;
-        [SerializeField] public CharacterTypeEnum Type;
-        [SerializeField] public int Star;
+        [SerializeField] public EggTypeEnum EggType;
+        [SerializeField] public RankTypeEnum RankType;
+        [SerializeField] public int Star = 1;
+        [SerializeField] public int PercentSpawn = 1;
 
         public CharacterModel ReturnValue()
         {
-            return new CharacterModel(Guid.Parse(Id), Name, Type, Star);
+            return new CharacterModel(Guid.Parse(Id), Name, EggType, Star);
         }
 
         public void SetData(CharacterModel character)
         {
             Id = character.Id.ToString();
             Name = character.Name;
-            Type = character.Type; 
+            EggType = character.EggType; 
             Star = character.Star;
         }
     }

@@ -1,8 +1,11 @@
+using Assets.Scripts.Services;
 using DefenseWar.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace DefenseWar.Core
 {
@@ -10,14 +13,21 @@ namespace DefenseWar.Core
     {
         [SerializeField] private Transform spawnPoints;
 
-        [SerializeField] private GameObject charatecSpawn;
+        [SerializeField] private AssetLabelReference characterLabelReference;
 
-        private List<GameObject> childCharacters = new List<GameObject>();
+        CharacterService characterService = CharacterService.Instance;
 
         private void Start()
         {
             Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
-            childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
+
+            Addressables.LoadAssetsAsync<GameObject>(characterLabelReference, (charater) => 
+            {
+                characterService.childCharacters.Add(charater);
+            });
+
+
+            //childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
         }
 
         public void SpawnCharacter()
@@ -32,12 +42,15 @@ namespace DefenseWar.Core
                 }
             }
 
+            if (spawnEmpty.Count < 1)
+                return;
+
             #region Init character
             int random = UnityEngine.Random.Range(0, spawnEmpty.Count);
 
-            int randomChildCharacter = UnityEngine.Random.Range(0, childCharacters.Count);
+            int randomChildCharacter = UnityEngine.Random.Range(0, characterService.childCharacters.Count);
 
-            var childCharacter = childCharacters[randomChildCharacter];
+            var childCharacter = characterService.childCharacters[randomChildCharacter];
 
             var characterGameObject = Instantiate(childCharacter, spawnEmpty[random]);
 

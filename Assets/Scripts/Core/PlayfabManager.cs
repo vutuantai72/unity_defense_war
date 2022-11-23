@@ -54,18 +54,6 @@ namespace DefenseWar.Core
         private void OnSuccess(LoginResult obj)
         {
             Debug.Log("Successful login/account create");
-
-            var childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
-
-            List<CharacterModel> characterModels = new List<CharacterModel>();
-
-            foreach (var item in childCharacters)
-            {
-                var character = item.GetComponent<Character>();
-
-                characterModels.Add(new CharacterModel(Guid.Parse(character.Id), character.Name, character.Type, character.Star));
-            }
-            SaveCharacters(characterModels);
         }
     }
 }

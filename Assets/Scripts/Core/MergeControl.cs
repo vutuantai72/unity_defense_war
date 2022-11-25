@@ -1,3 +1,4 @@
+using Assets.Scripts.Services;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,18 @@ namespace DefenseWar.Core
 
         public static bool mouseButtonReleased;
 
-        public static string nameSpawnPoint;
+        public string nameSpawnPoint;
+
+        public string currentSpawnPoint;
+
+        private Character character;
+
+        CharacterService characterService = CharacterService.Instance;
+
+        private void Start()
+        {
+            character = gameObject.GetComponent<Character>();
+        }
 
         private void OnMouseDown()
         {
@@ -24,6 +36,7 @@ namespace DefenseWar.Core
             offsetX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
             offsetY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
             positionSpawnPoint = transform.position;
+            currentSpawnPoint = nameSpawnPoint;
         }
 
         private void OnMouseDrag()
@@ -40,22 +53,30 @@ namespace DefenseWar.Core
             {
                 GameObject spawnPoint = GameObject.Find(nameSpawnPoint);
 
-                if (spawnPoint.transform.childCount == 0)
+                if (spawnPoint.transform.childCount != 0 && !currentSpawnPoint.Equals(nameSpawnPoint))
                 {
-                    positionSpawnPoint = spawnPoint.transform.position;
-                    transform.position = spawnPoint.transform.position;
-                    var character = Instantiate(gameObject, spawnPoint.transform, true);
-                    character.name = gameObject.name;
-                    Destroy(gameObject);
+                    foreach (Transform child in spawnPoint.transform)
+                    {
+                        Character subCharacter = child.GetComponent<Character>();
+                        if (character.Id == subCharacter.Id && character.Star == subCharacter.Star)
+                        {
+                            GameObject charRandom = SelectRandomCharactor(characterService.childCharacters, subCharacter.Star);
+                            var character = Instantiate(charRandom, spawnPoint.transform);
+                            character.name = charRandom.name;
+                            Destroy(child.gameObject);
+                            Destroy(gameObject);
+                            break;
+                        }
+                        else
+                        {
+                            if (positionSpawnPoint != Vector2.zero)
+                                transform.position = positionSpawnPoint;
+                        }
+                    }
                 }
                 else
                 {
-                    foreach (Transform character in spawnPoint.transform)
-                    {
-
-                        if (positionSpawnPoint != Vector2.zero)
-                            transform.position = positionSpawnPoint;
-                    }
+                    transform.position = positionSpawnPoint;
                 }
             }
             else
@@ -71,7 +92,37 @@ namespace DefenseWar.Core
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            nameSpawnPoint = collision.transform.name != "NotSpawnPoints" ? collision.transform.name : string.Empty;
+            nameSpawnPoint = string.Empty;
+            if (collision.tag == "SpawnPoint" && collision.transform.name != "NotSpawnPoints")
+            {
+                nameSpawnPoint = collision.transform.name;
+            }
+        }
+
+        private GameObject SelectRandomCharactor(List<GameObject> items, int star)
+        {
+            // Calculate the summa of all portions.
+            int poolSize = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i].GetComponent<Character>();
+                poolSize += item.Chance;
+            }
+            // Get a random integer from 0 to PoolSize.
+            int randomNumber = Random.Range(0, poolSize) + 1;
+            // Detect the item, which corresponds to current random number.
+            int accumulatedProbability = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i].GetComponent<Character>();
+                accumulatedProbability += item.Chance;
+                if (randomNumber <= accumulatedProbability)
+                {
+                    item.Star = star + 1;
+                    return items[i];
+                }
+            }
+            return null;    // this code will never come while you use this programm right :)
         }
     }
 }

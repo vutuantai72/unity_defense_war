@@ -21,9 +21,10 @@ namespace DefenseWar.Core
         {
             Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
 
-            Addressables.LoadAssetsAsync<GameObject>(characterLabelReference, (charater) => 
+            Addressables.LoadAssetsAsync<GameObject>(characterLabelReference, (character) => 
             {
-                characterService.childCharacters.Add(charater);
+                character.GetComponent<Character>().Star = 1;
+                characterService.childCharacters.Add(character);
             });
 
 
@@ -54,7 +55,11 @@ namespace DefenseWar.Core
 
             var characterGameObject = Instantiate(childCharacter, spawnEmpty[random]);
 
-            characterGameObject.name = childCharacter.GetComponent<Character>().Name;
+            var character = characterGameObject.GetComponent<Character>();
+
+            character.Star = 1;
+
+            characterGameObject.name = character.Name;
             #endregion
         }
     }

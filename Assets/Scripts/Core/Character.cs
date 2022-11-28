@@ -32,7 +32,7 @@ namespace DefenseWar.Core
 
         public CharacterModel ReturnValue()
         {
-            return new CharacterModel(Guid.Parse(Id), Name, EggType, Star);
+            return new CharacterModel(Guid.Parse(Id), Name, EggType, Star, 20);
         }
 
         public void SetData(CharacterModel character)

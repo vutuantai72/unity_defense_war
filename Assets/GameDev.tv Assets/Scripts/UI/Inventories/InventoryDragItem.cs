@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameDevTV.Core.UI.Dragging;
+using DefenseWar.Utils.Dragging;
 
 namespace GameDevTV.UI.Inventories
 {

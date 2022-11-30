@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,5 +29,11 @@ namespace DefenseWar.Utils.Dragging
         /// This should never exceed the number returned by `GetNumber`.
         /// </param>
         void RemoveItems(int number);
+
+        /// <summary>
+        /// Id of Item. 
+        /// </summary>
+        /// <returns></returns>
+        Guid GetItemId();
     }
 }

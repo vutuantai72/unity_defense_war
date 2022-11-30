@@ -96,7 +96,7 @@ namespace DefenseWar.Utils.Dragging
 
             // Swap won't be possible
             if (destinationContainer == null || sourceContainer == null || 
-                destinationContainer.GetItem() == null || 
+                destinationContainer.GetItemId() == null || 
                 object.ReferenceEquals(destinationContainer.GetItem(), sourceContainer.GetItem()))
             {
                 AttemptSimpleTransfer(destination);

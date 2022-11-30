@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DefenseWar.Utils.Dragging;
+using System;
 
 namespace GameDevTV.UI.Inventories
 {
@@ -39,6 +40,11 @@ namespace GameDevTV.UI.Inventories
         public void RemoveItems(int number)
         {
             icon.SetItem(null);
+        }
+
+        public Guid GetItemId()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace DefenseWar.Models.Enum
         Flora,
         Sky,
         Space,
-        Elemental
+        Elemental,
+        CNY
     }
 }

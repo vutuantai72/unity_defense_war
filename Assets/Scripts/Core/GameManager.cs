@@ -13,6 +13,10 @@ namespace DefenseWar.Core
     {
         [SerializeField] private Transform spawnPoints;
 
+        [SerializeField] private GameObject characterObject;
+
+        [SerializeField] private CharacterModel[] characters;
+
         [SerializeField] private AssetLabelReference characterLabelReference;
 
         CharacterService characterService = CharacterService.Instance;
@@ -21,11 +25,10 @@ namespace DefenseWar.Core
         {
             Application.SetStackTraceLogType(LogType.Error, StackTraceLogType.Full);
 
-            Addressables.LoadAssetsAsync<GameObject>(characterLabelReference, (character) => 
-            {
-                character.GetComponent<Character>().Star = 1;
-                characterService.childCharacters.Add(character);
-            });
+            //Addressables.LoadAssetsAsync<GameObject>(characterLabelReference, (character) => 
+            //{
+            //    characterService.childCharacters.Add(character);
+            //});
 
 
             //childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
@@ -49,17 +52,17 @@ namespace DefenseWar.Core
             #region Init character
             int random = UnityEngine.Random.Range(0, spawnEmpty.Count);
 
-            int randomChildCharacter = UnityEngine.Random.Range(0, characterService.childCharacters.Count);
+            int randomCharacter = UnityEngine.Random.Range(0, characters.Count());
 
-            var childCharacter = characterService.childCharacters[randomChildCharacter];
+            var characterModel = characters[randomCharacter];
 
-            var characterGameObject = Instantiate(childCharacter, spawnEmpty[random]);
+            var characterGameObject = Instantiate(characterObject, spawnEmpty[random]);
 
-            var character = characterGameObject.GetComponent<Character>();
+            characterGameObject.name = characterModel.Id;
 
-            character.Star = 1;
+            var characterData = characterGameObject.GetComponent<CharacterData>();
 
-            characterGameObject.name = character.Name;
+            characterData.SetData(characterModel);
             #endregion
         }
     }

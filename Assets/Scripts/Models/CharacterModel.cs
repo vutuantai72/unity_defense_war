@@ -1,3 +1,4 @@
+using Assets.Scripts.Services;
 using DefenseWar.Models.Enum;
 using System;
 using System.Collections;
@@ -6,21 +7,21 @@ using UnityEngine;
 
 namespace DefenseWar.Models
 {
+    [Serializable]
     public class CharacterModel
     {
-        public Guid Id;
+        public string Id;
         public string Name;
         public EggTypeEnum EggType;
         public RankTypeEnum RankType;
-        public int Star;
         public int Chance = 20;
+        public Sprite Avatar;
 
-        public CharacterModel(Guid id, string name, EggTypeEnum eggType, int star, int chance)
+        public CharacterModel(string id, string name, EggTypeEnum eggType, int chance)
         {
             Id = id;
             Name = name;
             EggType = eggType;
-            Star = star;
             Chance = chance;
         }
     }

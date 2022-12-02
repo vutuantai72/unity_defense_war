@@ -19,7 +19,7 @@ namespace DefenseWar.Utils.Dragging
     /// has occurred.
     /// </summary>
     /// <typeparam name="T">The type that represents the item being dragged.</typeparam>
-    public class DragItem<T> : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class DragItem<T> : MonoBehaviour
         where T : class
     {
         // PRIVATE STATE
@@ -28,40 +28,76 @@ namespace DefenseWar.Utils.Dragging
         IDragSource<T> source;
 
         // CACHED REFERENCES
-        Canvas parentCanvas;
+        Transform parentTransform;
 
         // LIFECYCLE METHODS
         private void Awake()
         {
-            parentCanvas = GetComponentInParent<Canvas>();
+            parentTransform = GetComponentInParent<SpawnSlot>().transform;
             source = GetComponentInParent<IDragSource<T>>();
         }
 
+        private void Start()
+        {
+            AddEventOnBeginDrag();
+            AddEventOnDrag();
+            AddEventOnEndDrag();
+        }
+
+        private void AddEventOnBeginDrag()
+        {
+            EventTrigger trigger = GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.BeginDrag;
+            entry.callback.AddListener((data) => { OnBeginDrag((PointerEventData)data); });
+            trigger.triggers.Add(entry);
+        }
+
+        private void AddEventOnDrag()
+        {
+            EventTrigger trigger = GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.Drag;
+            entry.callback.AddListener((data) => { OnDrag((PointerEventData)data); });
+            trigger.triggers.Add(entry);
+        }
+
+        private void AddEventOnEndDrag()
+        {
+            EventTrigger trigger = GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.EndDrag;
+            entry.callback.AddListener((data) => { OnEndDrag((PointerEventData)data); });
+            trigger.triggers.Add(entry);
+        }
+
         // PRIVATE
-        void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
+        void OnBeginDrag(PointerEventData eventData)
         {
             startPosition = transform.position;
             originalParent = transform.parent;
             // Else won't get the drop event.
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
-            transform.SetParent(parentCanvas.transform, true);
+            //GetComponent<CanvasGroup>().blocksRaycasts = false;
+            transform.SetParent(parentTransform, true);
         }
 
-        void IDragHandler.OnDrag(PointerEventData eventData)
+        void OnDrag(PointerEventData eventData)
         {
-            transform.position = eventData.position;
+            Vector3 targetPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            targetPos.z = 0;
+            transform.position = targetPos;
         }
 
-        void IEndDragHandler.OnEndDrag(PointerEventData eventData)
+        void OnEndDrag(PointerEventData eventData)
         {
             transform.position = startPosition;
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
-            transform.SetParent(originalParent, true);
+            //GetComponent<CanvasGroup>().blocksRaycasts = true;
+            transform.SetParent(originalParent);
 
             IDragDestination<T> container;
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                container = parentCanvas.GetComponent<IDragDestination<T>>();
+                container = parentTransform.GetComponent<IDragDestination<T>>();
             }
             else
             {

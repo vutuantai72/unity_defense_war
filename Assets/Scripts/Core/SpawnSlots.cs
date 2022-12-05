@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnSlot : MonoBehaviour, IDragContainer<CharacterModel>
+public class SpawnSlots : MonoBehaviour, IDragContainer<CharacterModel>
 {
     public void AddItems(CharacterModel item, int number)
     {

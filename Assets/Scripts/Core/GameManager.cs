@@ -30,7 +30,7 @@ namespace DefenseWar.Core
             //    characterService.childCharacters.Add(character);
             //});
 
-
+            characterService.CharactersUsed.AddRange(characters);
             //childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
         }
 
@@ -62,7 +62,7 @@ namespace DefenseWar.Core
 
             var characterData = characterGameObject.GetComponent<CharacterData>();
 
-            characterData.SetData(characterModel);
+            characterData.SetData(characterModel, 1);
             #endregion
         }
     }

@@ -23,18 +23,18 @@ namespace DefenseWar.Core
         {
         }
 
-        public CharacterModel ReturnValue()
+        public (CharacterModel,int) ReturnValue()
         {
-            return new CharacterModel(Id, Name, EggType, 20);
+            return (new CharacterModel(Id, Name, EggType, RankType, 20), Star);
         }
 
-        public void SetData(CharacterModel character)
+        public void SetData(CharacterModel character, int star)
         {
             Id = character.Id;
             Name = character.Name;
             EggType = character.EggType;
             RankType = character.RankType;
-            Star += 1;
+            Star = star;
             Chance = character.Chance;
             GetComponent<SpriteRenderer>().sprite = character.Avatar;
             foreach (Transform item in StarTransform.transform)

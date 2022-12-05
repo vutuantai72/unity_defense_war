@@ -17,12 +17,14 @@ namespace DefenseWar.Models
         public int Chance = 20;
         public Sprite Avatar;
 
-        public CharacterModel(string id, string name, EggTypeEnum eggType, int chance)
+        public CharacterModel(string id, string name, EggTypeEnum eggType, RankTypeEnum rankType, int chance, Sprite avatar = null)
         {
             Id = id;
             Name = name;
             EggType = eggType;
+            RankType = rankType;
             Chance = chance;
+            Avatar = avatar;
         }
     }
 }

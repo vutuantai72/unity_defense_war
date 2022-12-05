@@ -88,7 +88,6 @@ GameObject:
   - component: {fileID: 9019421210575766521}
   - component: {fileID: 9019421210575766516}
   - component: {fileID: 9019421210575766519}
-  - component: {fileID: 9019421210575766512}
   - component: {fileID: 1427785006}
   m_Layer: 0
   m_Name: Character
@@ -203,27 +202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b18990982c2f044bea65ea3be1efb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &9019421210575766512
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9019421210575766527}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &1427785006
 MonoBehaviour:
   m_ObjectHideFlags: 0

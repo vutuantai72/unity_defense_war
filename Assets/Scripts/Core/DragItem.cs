@@ -29,18 +29,18 @@ namespace DefenseWar.Core
         public static bool mouseButtonReleased;
 
         private CharacterModel ownerCharacter;
+        private int ownerStar;
 
         CharacterService characterService = CharacterService.Instance;
 
         private void Awake()
         {
-            parentTransform = GetComponentInParent<SpawnSlot>().transform;
+            parentTransform = GetComponentInParent<SpawnSlots>().transform;
             boxCollider2D = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
         private void Start()
         {
-            ownerCharacter = GetComponent<CharacterData>().ReturnValue();
         }
 
         private void OnMouseDown()
@@ -68,6 +68,7 @@ namespace DefenseWar.Core
             transform.position = startPosition;
             transform.SetParent(originalParent);
             spriteRenderer.sortingOrder = 1;
+            (ownerCharacter, ownerStar) = GetComponent<CharacterData>().ReturnValue();
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
             if (hit)
             {
@@ -75,75 +76,20 @@ namespace DefenseWar.Core
                 if (hit.collider)
                 {
                     var character = hit.collider.gameObject.GetComponent<CharacterData>();
-                    var data = character.ReturnValue();
-                    Debug.LogError(data.Id);
-                    Debug.LogError("Owner Id" + ownerCharacter.Id);
-
+                    var (characterData, star) = character.ReturnValue();
+                    if (characterData.Id == ownerCharacter.Id && star == ownerStar)
+                    {
+                        var newCharacter = characterService.SelectRandomCharacter();
+                        if (newCharacter != null)
+                        {
+                            character.SetData(newCharacter, star + 1);
+                            Destroy(gameObject);
+                        }
+                    }
                 }
             }
             boxCollider2D.enabled = true;
-
-            //if (!string.IsNullOrEmpty(nameSpawnPoint))
-            //{
-            //    GameObject spawnPoint = GameObject.Find(nameSpawnPoint);
-
-            //    if (spawnPoint.transform.childCount != 0 && !currentSpawnPoint.Equals(nameSpawnPoint))
-            //    {
-            //        foreach (Transform child in spawnPoint.transform)
-            //        {
-            //            Character subCharacter = child.GetComponent<Character>();
-            //            if (character.Id == subCharacter.Id && character.Star == subCharacter.Star)
-            //            {
-            //                GameObject charRandom = SelectRandomCharactor(characterService.childCharacters, subCharacter.Star);
-            //                var character = Instantiate(charRandom, spawnPoint.transform);
-            //                character.name = charRandom.name;
-            //                Destroy(child.gameObject);
-            //                Destroy(gameObject);
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                if (positionSpawnPoint != Vector2.zero)
-            //                    transform.position = positionSpawnPoint;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        transform.position = positionSpawnPoint;
-            //    }
-            //}
-            //else
-            //{
-            //    transform.position = positionSpawnPoint;
-            //}
         }
-
-        //private GameObject SelectRandomCharactor(List<GameObject> items, int star)
-        //{
-        //    // Calculate the summa of all portions.
-        //    int poolSize = 0;
-        //    for (int i = 0; i < items.Count; i++)
-        //    {
-        //        var item = items[i].GetComponent<Character>();
-        //        poolSize += item.Chance;
-        //    }
-        //    // Get a random integer from 0 to PoolSize.
-        //    int randomNumber = Random.Range(0, poolSize) + 1;
-        //    // Detect the item, which corresponds to current random number.
-        //    int accumulatedProbability = 0;
-        //    for (int i = 0; i < items.Count; i++)
-        //    {
-        //        var item = items[i].GetComponent<Character>();
-        //        accumulatedProbability += item.Chance;
-        //        if (randomNumber <= accumulatedProbability)
-        //        {
-        //            item.Star = star + 1;
-        //            return items[i];
-        //        }
-        //    }
-        //    return null;    // this code will never come while you use this programm right :)
-        //}
     }
 }
 

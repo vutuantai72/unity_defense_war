@@ -33,7 +33,7 @@ namespace DefenseWar.Utils.Dragging
         // LIFECYCLE METHODS
         private void Awake()
         {
-            parentTransform = GetComponentInParent<SpawnSlot>().transform;
+            parentTransform = GetComponentInParent<SpawnSlots>().transform;
             source = GetComponentInParent<IDragSource<T>>();
         }
 

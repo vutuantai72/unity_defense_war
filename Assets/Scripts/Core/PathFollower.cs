@@ -8,8 +8,10 @@ public class PathFollower : MonoBehaviour
     [SerializeField] private PathCreator pathCreator;
     public float speed = 5;
     float distanceTravelled;
+    Rigidbody2D m_Rigidbody;
     void Start()
     {
+        m_Rigidbody = GetComponent<Rigidbody2D>();
         if (pathCreator != null)
         {
             // Subscribed to the pathUpdated event so that we're notified if the path changes during the game
@@ -22,7 +24,8 @@ public class PathFollower : MonoBehaviour
         if (pathCreator != null)
         {
             distanceTravelled += speed * Time.deltaTime;
-            transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+            m_Rigidbody.MovePosition(pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop));
+            Debug.LogError(pathCreator.path.GetPoint(0));
         }
     }
 

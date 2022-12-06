@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3493519150218643008}
   - component: {fileID: 3493519150218643009}
   - component: {fileID: 3493519150218643010}
+  - component: {fileID: 5273558616861268083}
   - component: {fileID: 3493519150218643011}
   - component: {fileID: 3493519150218643020}
   m_Layer: 0
@@ -99,9 +100,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3626ffcfcd3a2e4da79324825d69462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPath: {fileID: 4631688478563346597, guid: eb64dd9eaf1272243b73403034e1986f, type: 3}
-  waypointTolerance: 0
-  moveSpeed: 0.3
+--- !u!114 &5273558616861268083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3493519150218643015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d01872da438a244936cd8c4701c2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCreator: {fileID: 0}
+  speed: 0.5
 --- !u!61 &3493519150218643011
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,4 +160,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

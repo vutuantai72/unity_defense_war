@@ -30,7 +30,7 @@ namespace DefenseWar.Core
         private CharacterModel ownerCharacter;
         private int ownerStar;
 
-        CharacterService characterService = CharacterService.Instance;
+        GameDataService characterService = GameDataService.Instance;
 
         private void Awake()
         {

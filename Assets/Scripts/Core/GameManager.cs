@@ -17,9 +17,11 @@ namespace DefenseWar.Core
 
         [SerializeField] private CharacterModel[] characters;
 
+        [SerializeField] private EnemyModel[] enemies;
+
         [SerializeField] private AssetLabelReference characterLabelReference;
 
-        CharacterService characterService = CharacterService.Instance;
+        GameDataService gameDataService = GameDataService.Instance;
 
         private void Start()
         {
@@ -30,7 +32,8 @@ namespace DefenseWar.Core
             //    characterService.childCharacters.Add(character);
             //});
 
-            characterService.CharactersUsed.AddRange(characters);
+            gameDataService.CharactersUsed.AddRange(characters);
+            gameDataService.Enemies.AddRange(enemies);
             //childCharacters = Resources.LoadAll<GameObject>("Prefabs/Characters").ToList();
         }
 

@@ -25,7 +25,6 @@ public class PathFollower : MonoBehaviour
         {
             distanceTravelled += speed * Time.deltaTime;
             m_Rigidbody.MovePosition(pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop));
-            Debug.LogError(pathCreator.path.GetPoint(0));
         }
     }
 

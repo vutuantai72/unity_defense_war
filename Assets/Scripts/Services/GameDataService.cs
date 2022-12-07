@@ -10,9 +10,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Services
 {
-    public class CharacterService : SingletonService<CharacterService>
+    public class GameDataService : SingletonService<GameDataService>
     {
         public List<CharacterModel> CharactersUsed = new List<CharacterModel>();
+        public List<EnemyModel> Enemies = new List<EnemyModel>();
 
         public CharacterModel SelectRandomCharacter()
         {

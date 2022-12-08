@@ -30,7 +30,8 @@ namespace DefenseWar.Core
         private CharacterModel ownerCharacter;
         private int ownerStar;
 
-        GameDataService characterService = GameDataService.Instance;
+        GameDataService gameDataService = GameDataService.Instance;
+        EventManage eventManage = EventManage.Instance;
 
         private void Awake()
         {
@@ -39,14 +40,16 @@ namespace DefenseWar.Core
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
         private void Start()
-        {
+        {      
         }
 
         private void OnMouseDown()
         {
+            Debug.LogError("dsad");
             mouseButtonReleased = false;
             offsetX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
             offsetY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
+            Instantiate(gameObject, transform.parent);
             startPosition = transform.position;
             originalParent = transform.parent;
             boxCollider2D.enabled = false;
@@ -67,6 +70,7 @@ namespace DefenseWar.Core
             transform.position = startPosition;
             transform.SetParent(originalParent);
             spriteRenderer.sortingOrder = 1;
+            Destroy(gameObject);
             (ownerCharacter, ownerStar) = GetComponent<CharacterData>().ReturnValue();
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
             if (hit)
@@ -75,16 +79,21 @@ namespace DefenseWar.Core
                 if (hit.collider)
                 {
                     var character = hit.collider.gameObject.GetComponent<CharacterData>();
-                    var (characterData, star) = character.ReturnValue();
-                    if (characterData.Id == ownerCharacter.Id && star == ownerStar)
+                    if (character != null)
                     {
-                        var newCharacter = characterService.SelectRandomCharacter();
-                        if (newCharacter != null)
+                        var (characterData, star) = character.ReturnValue();
+                        if (characterData.Id == ownerCharacter.Id && star == ownerStar)
                         {
-                            character.SetData(newCharacter, star + 1);
-                            Destroy(gameObject);
+                            var newCharacter = gameDataService.SelectRandomCharacter();
+                            if (newCharacter != null)
+                            {
+                                gameDataService.totalStar += 1 - star;
+                                character.SetData(newCharacter, star + 1);
+                                Destroy(gameObject);
+                            }
                         }
                     }
+                    
                 }
             }
             boxCollider2D.enabled = true;

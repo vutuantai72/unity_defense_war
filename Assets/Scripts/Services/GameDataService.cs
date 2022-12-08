@@ -15,6 +15,8 @@ namespace Assets.Scripts.Services
         public List<CharacterModel> CharactersUsed = new List<CharacterModel>();
         public List<EnemyModel> Enemies = new List<EnemyModel>();
 
+        public int totalStar;
+
         public CharacterModel SelectRandomCharacter()
         {
             // Calculate the summa of all portions.

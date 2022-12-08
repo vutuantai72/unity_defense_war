@@ -22,6 +22,7 @@ namespace DefenseWar.Core
         [SerializeField] private AssetLabelReference characterLabelReference;
 
         GameDataService gameDataService = GameDataService.Instance;
+        EventManage eventManage = EventManage.Instance;
 
         private void Start()
         {
@@ -66,6 +67,10 @@ namespace DefenseWar.Core
             var characterData = characterGameObject.GetComponent<CharacterData>();
 
             characterData.SetData(characterModel, 1);
+
+
+            gameDataService.totalStar += 1;
+            eventManage.onUpdateTotalStar.Invoke(gameDataService.totalStar);
             #endregion
         }
     }

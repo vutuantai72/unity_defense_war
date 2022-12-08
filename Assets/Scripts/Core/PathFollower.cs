@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
-    [SerializeField] private PathCreator pathCreator;
+    [SerializeField] private GameObject patrolPath;
     public float speed = 5;
     float distanceTravelled;
     Rigidbody2D m_Rigidbody;
+    PathCreator pathCreator;
+
+    private void Awake()
+    {
+        pathCreator = patrolPath.GetComponentInChildren<PathCreator>();
+    }
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();

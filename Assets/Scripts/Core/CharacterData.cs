@@ -15,6 +15,8 @@ namespace DefenseWar.Core
         private RankTypeEnum RankType;
         private int Star = 0;
         private int Chance = 20;
+        public float Damage;
+        public float DamagePerSec;
 
         [SerializeField] private GameObject StarPrefab;
         [SerializeField] private GameObject StarTransform;
@@ -25,7 +27,7 @@ namespace DefenseWar.Core
 
         public (CharacterModel,int) ReturnValue()
         {
-            return (new CharacterModel(Id, Name, EggType, RankType, 20), Star);
+            return (new CharacterModel(Id, Name, EggType, RankType, 20, Damage, DamagePerSec), Star);
         }
 
         public void SetData(CharacterModel character, int star)
@@ -36,6 +38,8 @@ namespace DefenseWar.Core
             RankType = character.RankType;
             Star = star;
             Chance = character.Chance;
+            Damage = character.Damage;
+            DamagePerSec = character.DamagePerSec;
             GetComponent<SpriteRenderer>().sprite = character.Avatar;
             foreach (Transform item in StarTransform.transform)
             {

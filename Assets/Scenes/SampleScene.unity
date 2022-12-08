@@ -206,6 +206,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (1)
@@ -422,6 +426,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (11)
@@ -484,6 +492,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (14)
@@ -968,6 +980,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (7)
@@ -1189,6 +1205,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (10)
@@ -1251,6 +1271,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (5)
@@ -1432,6 +1456,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (9)
@@ -1629,6 +1657,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (12)
@@ -1691,6 +1723,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (8)
@@ -1753,6 +1789,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (6)
@@ -1815,6 +1855,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (2)
@@ -1877,6 +1921,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (13)
@@ -1939,6 +1987,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (4)
@@ -2225,6 +2277,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1709092552}
     m_Modifications:
+    - target: {fileID: 1076759031261041541, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
+      propertyPath: enemyTransform
+      value: 
+      objectReference: {fileID: 840774037}
     - target: {fileID: 1722625614300734898, guid: 8b6d3361668ead3448e32718a09e7d3b, type: 3}
       propertyPath: m_Name
       value: SpawnSlot (3)

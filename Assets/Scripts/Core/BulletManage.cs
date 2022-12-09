@@ -15,9 +15,20 @@ public class BulletManage : MonoBehaviour
         
     }
 
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    Destroy(gameObject);
+    //}
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.LogError(collision.name);
+        StartCoroutine(AttackEnemy(collision));
+    }
+
+    private IEnumerator AttackEnemy(Collider2D collision)
+    {
+        yield return null;
+        Destroy(collision.gameObject);
         Destroy(gameObject);
     }
 }

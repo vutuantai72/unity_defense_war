@@ -6,12 +6,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.TextCore.Text;
 
 namespace DefenseWar.Core
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Transform spawnPoints;
+        [SerializeField] private Transform spawnSlots;
 
         [SerializeField] private GameObject characterObject;
 
@@ -40,31 +41,33 @@ namespace DefenseWar.Core
 
         public void SpawnCharacter()
         {
-            List<Transform> spawnEmpty = new List<Transform>();
+            List<Transform> slotEmpty = new List<Transform>();
 
-            foreach (Transform spawnPoint in spawnPoints)
+            foreach (Transform spawnSlot in spawnSlots)
             {
-                if (spawnPoint.childCount == 0)
+                if (spawnSlot.GetComponentInChildren<CharacterData>().transform.childCount == 1)
                 {
-                    spawnEmpty.Add(spawnPoint);
+                    slotEmpty.Add(spawnSlot);
                 }
             }
 
-            if (spawnEmpty.Count < 1)
+            if (slotEmpty.Count < 1)
                 return;
 
             #region Init character
-            int random = UnityEngine.Random.Range(0, spawnEmpty.Count);
+            int random = UnityEngine.Random.Range(0, slotEmpty.Count);
 
             int randomCharacter = UnityEngine.Random.Range(0, characters.Count());
 
             var characterModel = characters[randomCharacter];
 
-            var characterGameObject = Instantiate(characterObject, spawnEmpty[random]);
+            var characterGameObject = Instantiate(characterObject, slotEmpty[random].GetChild(0));
 
             characterGameObject.name = characterModel.Id;
 
-            var characterData = characterGameObject.GetComponent<CharacterData>();
+            characterGameObject.GetComponent<SpriteRenderer>().sprite = characterModel.Avatar;
+
+            var characterData = characterGameObject.GetComponentInParent<CharacterData>();
 
             characterData.SetData(characterModel, 1);
 

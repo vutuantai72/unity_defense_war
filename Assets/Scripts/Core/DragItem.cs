@@ -27,13 +27,9 @@ namespace DefenseWar.Core
 
         public static bool mouseButtonReleased;
 
-        private CharacterModel ownerCharacter;
-        private int ownerStar;
-
         GameObject tempGameObject;
 
         GameDataService gameDataService = GameDataService.Instance;
-        EventManage eventManage = EventManage.Instance;
 
         private void Awake()
         {
@@ -72,24 +68,29 @@ namespace DefenseWar.Core
             transform.SetParent(originalParent);
             spriteRenderer.sortingOrder = 1;
             Destroy(tempGameObject);
-            (ownerCharacter, ownerStar) = GetComponent<CharacterData>().ReturnValue();
+            var ownerCharacterData = GetComponentInParent<CharacterData>();
+            var (data, ownerStar) = ownerCharacterData.ReturnValue();
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
             if (hit)
             {
                 // what has been hit
                 if (hit.collider)
                 {
-                    var character = hit.collider.gameObject.GetComponent<CharacterData>();
+                    var character = hit.collider.gameObject.GetComponentInParent<CharacterData>();
                     if (character != null)
                     {
                         var (characterData, star) = character.ReturnValue();
-                        if (characterData.Id == ownerCharacter.Id && star == ownerStar)
+                        if (characterData.Id == data.Id && star == ownerStar)
                         {
                             var newCharacter = gameDataService.SelectRandomCharacter();
                             if (newCharacter != null)
                             {
                                 gameDataService.totalStar += 1 - star;
+                                var newSprite = character.GetComponentInChildren<SpriteRenderer>();
+                                newSprite.sprite = newCharacter.Avatar;
+                                newSprite.name = newCharacter.Id;
                                 character.SetData(newCharacter, star + 1);
+                                ownerCharacterData.ResetData();
                                 Destroy(gameObject);
                             }
                         }

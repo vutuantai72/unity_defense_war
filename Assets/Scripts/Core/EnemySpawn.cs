@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [SerializeField] private float baseSpawnInSecond = 0.5f;
+    [SerializeField] private float coefficientSpawn = 0.5f;
     [SerializeField] private GameObject enemy;
     [SerializeField] private Transform spawnPoint;
 
@@ -28,6 +28,10 @@ public class EnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeMinion = (float)Math.Round(1 / coefficientSpawn, 1);
+        timeForIncreaseBaseSecond = 10;
+        timeMinionSpeed = 15;
+        timeMiniBoss = 20;
         eventManage.onUpdateTotalStar.AddListener(UpdateBaseSpawnInSecond);
     }
 
@@ -42,47 +46,58 @@ public class EnemySpawn : MonoBehaviour
     private IEnumerator SpawnMinion()
     {
         yield return null;
-        timeMinion += Time.deltaTime;
-        timeForIncreaseBaseSecond += Time.deltaTime;
-        double second = Math.Round(timeMinion, 1);
-        var secondBase = Mathf.FloorToInt(timeForIncreaseBaseSecond % 60);
-        if (secondBase == 10)
+
+        if (timeForIncreaseBaseSecond <= 0)
         {
-            baseSpawnInSecond = baseSpawnInSecond * (1 + 0.05f);
-            timeForIncreaseBaseSecond = 0;
+            coefficientSpawn = coefficientSpawn * (1 + 0.05f);
+            timeForIncreaseBaseSecond = 10;
         }
-        var timeToSpawn = Math.Round(1 / baseSpawnInSecond, 1);
-        if (second == timeToSpawn)
+        else
+        {
+            timeForIncreaseBaseSecond -= Time.deltaTime;
+        }
+
+        if (timeMinion <= 0)
         {
             InstantiateEnemy(EnemyTypeEnum.Minion);
 
-            timeMinion = 0;
+            timeMinion = (float)Math.Round(1 / coefficientSpawn, 1);
+        }
+        else
+        {
+            timeMinion -= Time.deltaTime;
         }
     }
 
     private IEnumerator SpawnMinionSpeed()
     {
         yield return null;
-        timeMinionSpeed += Time.deltaTime;
-        float second = Mathf.FloorToInt(timeMinionSpeed % 60);
-        if (second == 15)
+
+        if (timeMinionSpeed <= 0)
         {
             InstantiateEnemy(EnemyTypeEnum.MinionSpeed);
 
-            timeMinionSpeed = 0;
+            timeMinionSpeed = 15;
+        }
+        else
+        {
+            timeMinionSpeed -= Time.deltaTime;
         }
     }
 
     private IEnumerator SpawnMiniBoss()
     {
         yield return null;
-        timeMiniBoss += Time.deltaTime;
-        float second = Mathf.FloorToInt(timeMiniBoss % 60);
-        if (second == 20)
+
+        if (timeMiniBoss <= 0)
         {
             InstantiateEnemy(EnemyTypeEnum.MiniBoss);
 
-            timeMiniBoss = 0;
+            timeMiniBoss = 20;
+        }
+        else
+        {
+            timeMiniBoss -= Time.deltaTime;
         }
     }
 
@@ -101,7 +116,7 @@ public class EnemySpawn : MonoBehaviour
 
     private void UpdateBaseSpawnInSecond(int totalStar)
     {
-        baseSpawnInSecond = baseSpawnInSecond * (1 + 0.1f * totalStar);
-        timeMinion = 0;
+        coefficientSpawn = coefficientSpawn * (1 + 0.1f * totalStar);
+        timeMinion = (float)Math.Round(1 / coefficientSpawn, 1);
     }
 }

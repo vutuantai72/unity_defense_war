@@ -8,6 +8,7 @@ namespace DefenseWar.Models.Enum
 {
     public enum EggTypeEnum
     {
+        None,
         Magic,
         Horror,
         Marine,

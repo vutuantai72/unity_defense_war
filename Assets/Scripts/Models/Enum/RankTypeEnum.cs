@@ -8,6 +8,7 @@ namespace DefenseWar.Models.Enum
 {
     public enum RankTypeEnum
     {
+        None,
         Common,
         Rare,
         Epic,

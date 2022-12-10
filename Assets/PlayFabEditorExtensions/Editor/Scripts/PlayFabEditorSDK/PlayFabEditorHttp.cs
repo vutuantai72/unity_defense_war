@@ -219,6 +219,8 @@ namespace PlayFab.PfEditor
                 {
                     callBack(www.downloadHandler.data);
                 }
+
+                www.Dispose();
             }
             else
             {
@@ -235,6 +237,8 @@ namespace PlayFab.PfEditor
                 errorCallback(www.error);
             else
                 callBack(www.text);
+
+            www.Dispose();
         }
 
         private static IEnumerator PostDownload(WWW www, Action<byte[]> callBack, Action<string> errorCallback)
@@ -245,6 +249,8 @@ namespace PlayFab.PfEditor
                 errorCallback(www.error);
             else
                 callBack(www.bytes);
+
+            www.Dispose();
         }
 #endif
     }

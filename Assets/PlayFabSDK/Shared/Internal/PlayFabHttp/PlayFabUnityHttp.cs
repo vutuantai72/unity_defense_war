@@ -53,6 +53,8 @@ namespace PlayFab.Internal
                         errorCallback(www.error);
                     else
                         successCallback(www.downloadHandler.data);
+
+                    www.Dispose();
                 };
             }
             else

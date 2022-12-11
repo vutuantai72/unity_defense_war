@@ -1,5 +1,6 @@
 using Assets.Scripts.Services;
 using DefenseWar.Models.Enum;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace DefenseWar.Models
         public int Chance = 20;
         public float Damage;
         public float DamagePerSec;
-        public Sprite Avatar;
+        public SkeletonDataAsset skeletonDataAsset;
         public GameObject Bullet;
 
         public CharacterModel(
@@ -28,7 +29,6 @@ namespace DefenseWar.Models
             int chance,
             float damage,
             float damagePerSec,
-            Sprite avatar = null,
             GameObject bullet = null)
         {
             Id = id;
@@ -38,7 +38,6 @@ namespace DefenseWar.Models
             Chance = chance;
             Damage = damage;
             DamagePerSec = damagePerSec;
-            Avatar = avatar;
             Bullet = bullet;
         }
     }

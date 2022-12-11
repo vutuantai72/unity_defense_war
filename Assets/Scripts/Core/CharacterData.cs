@@ -1,6 +1,9 @@
+using Assets.Scripts.Models.Enum;
 using DefenseWar.Models;
 using DefenseWar.Models.Enum;
 using DG.Tweening;
+using Spine;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,29 +48,47 @@ namespace DefenseWar.Core
         // Update is called once per frame
         void Update()
         {
-            if (transform.GetComponentInChildren<DragItem>() != null && enemyTransform.childCount != 0)
-            {
-                if (timeBtwAttack <= 0)
-                {
-                    var arrowObject = Instantiate(arrow, transform);
-                    var dir = enemyTransform.GetChild(0).position - arrowObject.transform.position;
-                    var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 180 + 37;
-                    arrowObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                    arrowObject.transform.DOMove(enemyTransform.GetChild(0).position, 1f).OnComplete(() =>
-                    {
-                        Destroy(arrowObject);
-                    });
+            var skeletonAnimation = transform.GetComponentInChildren<SkeletonAnimation>();
 
-                    timeBtwAttack = attackSpeed;
-                }
-                else
+            if (skeletonAnimation == null || enemyTransform.childCount == 0) return;
+
+            if (timeBtwAttack <= 0)
+            {
+                Spine.TrackEntry trackEntry = skeletonAnimation.AnimationState.SetAnimation((int)AnimationStateEnum.Attack, "attack_char", false);
+                var animTrack = skeletonAnimation.state.AddAnimation((int)AnimationStateEnum.Attack, "idle", false, 0f);
+
+                animTrack.Complete += delegate (TrackEntry trackEntry)
                 {
-                    timeBtwAttack -= Time.deltaTime;
-                }
+                    skeletonAnimation.AnimationState.SetAnimation((int)AnimationStateEnum.Idle, "idle", true);
+                };
+                //trackEntry.AnimationTime = 1.5f;
+                //skeletonAnimation.AnimationState.AddAnimation(0, "idle", true, 0.8f);
+
+                StartCoroutine(OnAttackAnimComplete(trackEntry));
+                timeBtwAttack = attackSpeed + trackEntry.AnimationEnd;
             }
+            else
+            {
+                timeBtwAttack -= Time.deltaTime;
+            }
+
         }
 
-        public (CharacterModel,int) ReturnValue()
+        private IEnumerator OnAttackAnimComplete(TrackEntry trackEntry)
+        {
+            yield return new WaitForSeconds(trackEntry.AnimationEnd/2.5f);
+            var arrowObject = Instantiate(arrow, transform);
+            var dir = enemyTransform.GetChild(0).position - arrowObject.transform.position;
+            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 180 + 37;
+            arrowObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            var target = enemyTransform.GetChild(0).position;
+            arrowObject.transform.DOMove(target, 1f).OnComplete(() =>
+            {
+                Destroy(arrowObject);
+            });
+        }
+
+        public (CharacterModel, int) ReturnValue()
         {
             return (new CharacterModel(Id, Name, EggType, RankType, 20, Damage, DamagePerSec), Star);
         }

@@ -136,7 +136,6 @@ namespace PlayFab.Internal
 #else
             yield return www.Send();
 #endif
-
 #if PLAYFAB_REQUEST_TIMING
             stopwatch.Stop();
             var timing = new PlayFabHttp.RequestTiming {

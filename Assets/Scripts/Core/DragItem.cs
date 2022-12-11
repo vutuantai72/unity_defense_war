@@ -1,5 +1,8 @@
 using Assets.Scripts.Services;
 using DefenseWar.Models;
+using Spine;
+using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,7 @@ namespace DefenseWar.Core
         Vector3 startPosition;
         Transform originalParent;
         Collider2D boxCollider2D;
-        SpriteRenderer spriteRenderer;
+        MeshRenderer meshSkeleton;
 
         // CACHED REFERENCES
         Transform parentTransform;
@@ -35,38 +38,37 @@ namespace DefenseWar.Core
         {
             parentTransform = GetComponentInParent<SpawnSlots>().transform;
             boxCollider2D = GetComponent<Collider2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            //meshSkeleton = GetComponent<MeshRenderer>();
         }
+
         private void Start()
-        {      
+        {
         }
+
 
         private void OnMouseDown()
         {
             mouseButtonReleased = false;
-            offsetX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
-            offsetY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
             tempGameObject = Instantiate(gameObject, transform.parent);
-            startPosition = transform.position;
-            originalParent = transform.parent;
+            offsetX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - tempGameObject.transform.position.x;
+            offsetY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - tempGameObject.transform.position.y;
+            startPosition = tempGameObject.transform.position;
+            originalParent = tempGameObject.transform.parent;
             boxCollider2D.enabled = false;
-            spriteRenderer.sortingOrder = 2;
 
-            transform.SetParent(parentTransform, true);
+            tempGameObject.transform.SetParent(parentTransform, true);
         }
 
         private void OnMouseDrag()
         {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector2(mousePosition.x - offsetX, mousePosition.y - offsetY);
+            tempGameObject.transform.position = new Vector2(mousePosition.x - offsetX, mousePosition.y - offsetY);
         }
 
         private void OnMouseUp()
         {
             mouseButtonReleased = true;
-            transform.position = startPosition;
-            transform.SetParent(originalParent);
-            spriteRenderer.sortingOrder = 1;
             Destroy(tempGameObject);
             var ownerCharacterData = GetComponentInParent<CharacterData>();
             var (data, ownerStar) = ownerCharacterData.ReturnValue();
@@ -86,11 +88,11 @@ namespace DefenseWar.Core
                             if (newCharacter != null)
                             {
                                 gameDataService.totalStar += 1 - star;
-                                var newSprite = character.GetComponentInChildren<SpriteRenderer>();
-                                newSprite.sprite = newCharacter.Avatar;
+                                var newSprite = character.GetComponentInChildren<SkeletonAnimation>();
+                                newSprite.skeletonDataAsset = newCharacter.skeletonDataAsset;
                                 newSprite.name = newCharacter.Id;
-                                character.SetData(newCharacter, star + 1);
                                 ownerCharacterData.ResetData();
+                                character.SetData(newCharacter, star + 1);
                                 Destroy(gameObject);
                             }
                         }

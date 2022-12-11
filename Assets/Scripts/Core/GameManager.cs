@@ -1,6 +1,9 @@
+using Assets.Scripts.Models.Enum;
 using Assets.Scripts.Services;
 using DefenseWar.Models;
-using System;
+using Spine;
+using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +25,8 @@ namespace DefenseWar.Core
 
         [SerializeField] private AssetLabelReference characterLabelReference;
 
+
+        //Spine.AnimationState animationState;
         GameDataService gameDataService = GameDataService.Instance;
         EventManage eventManage = EventManage.Instance;
 
@@ -63,18 +68,29 @@ namespace DefenseWar.Core
 
             var characterGameObject = Instantiate(characterObject, slotEmpty[random].GetChild(0));
 
-            characterGameObject.name = characterModel.Id;
-
-            characterGameObject.GetComponent<SpriteRenderer>().sprite = characterModel.Avatar;
-
-            var characterData = characterGameObject.GetComponentInParent<CharacterData>();
-
-            characterData.SetData(characterModel, 1);
-
+            InitAnimationCharacter(characterGameObject, characterModel);
 
             gameDataService.totalStar += 1;
             eventManage.onUpdateTotalStar.Invoke(gameDataService.totalStar);
             #endregion
+        }
+
+        private void InitAnimationCharacter(GameObject characterGameObject, CharacterModel characterModel)
+        {
+            characterGameObject.name = characterModel.Id;
+            var characterData = characterGameObject.GetComponentInParent<CharacterData>();
+            characterData.SetData(characterModel, 1);
+
+            var skeletonAniamtionComponent = characterGameObject.GetComponent<SkeletonAnimation>();
+            skeletonAniamtionComponent.skeletonDataAsset = characterModel.skeletonDataAsset;
+            characterGameObject.GetComponent<MeshRenderer>().sortingLayerName = "Character";
+            skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Appear, "appear_demo", false);
+            var appearAnimTrack = skeletonAniamtionComponent.state.AddAnimation((int)AnimationStateEnum.Appear, "idle", false, 0f);
+
+            appearAnimTrack.Complete += delegate (TrackEntry trackEntry)
+            {
+                skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Idle, "idle", true);
+            };
         }
     }
 }

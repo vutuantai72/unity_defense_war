@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1722625614300734898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.55, y: 0.77400005, z: 0}
-  m_LocalScale: {x: 2.4, y: 2.4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1056794270880011238}
@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6cfa0a45e96ef478b79cf65c16ccbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 
   starPrefab: {fileID: 2017369279357548752, guid: 7c0f75c251377a041a5848683a7d74a0, type: 3}
   starTransform: {fileID: 3867191595981714448}
   characterObject: {fileID: 9019421210575766527, guid: 3050a1e9b460c7f4ea5e97bb3cdcae28, type: 3}
@@ -117,7 +118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.161}
+  m_AnchoredPosition: {x: 0, y: 0.298}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5828040812189300029

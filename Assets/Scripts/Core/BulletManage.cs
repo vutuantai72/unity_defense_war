@@ -29,6 +29,5 @@ public class BulletManage : MonoBehaviour
     {
         yield return null;
         Destroy(collision.gameObject);
-        Destroy(gameObject);
     }
 }

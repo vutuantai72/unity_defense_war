@@ -81,16 +81,18 @@ namespace DefenseWar.Core
             var characterData = characterGameObject.GetComponentInParent<CharacterData>();
             characterData.SetData(characterModel, 1);
 
-            var skeletonAniamtionComponent = characterGameObject.GetComponent<SkeletonAnimation>();
+            var skeletonAniamtionComponent = characterGameObject.GetComponent<SkeletonMecanim>();
             skeletonAniamtionComponent.skeletonDataAsset = characterModel.skeletonDataAsset;
             characterGameObject.GetComponent<MeshRenderer>().sortingLayerName = "Character";
-            skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Appear, "appear_demo", false);
-            var appearAnimTrack = skeletonAniamtionComponent.state.AddAnimation((int)AnimationStateEnum.Appear, "idle", false, 0f);
+            var animator = characterGameObject.GetComponent<Animator>();
+            animator.runtimeAnimatorController = characterModel.animator;
+            //skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Appear, "appear_demo", false);
+            //var appearAnimTrack = skeletonAniamtionComponent.state.AddAnimation((int)AnimationStateEnum.Appear, "idle", false, 0f);
 
-            appearAnimTrack.Complete += delegate (TrackEntry trackEntry)
-            {
-                skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Idle, "idle", true);
-            };
+            //appearAnimTrack.Complete += delegate (TrackEntry trackEntry)
+            //{
+            //    skeletonAniamtionComponent.AnimationState.SetAnimation((int)AnimationStateEnum.Idle, "idle", true);
+            //};
         }
     }
 }

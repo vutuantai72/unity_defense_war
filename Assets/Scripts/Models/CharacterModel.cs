@@ -4,6 +4,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace DefenseWar.Models
@@ -19,6 +20,8 @@ namespace DefenseWar.Models
         public float Damage;
         public float DamagePerSec;
         public SkeletonDataAsset skeletonDataAsset;
+        public AnimatorController animator;
+        public Transform targetEnemy;
         public GameObject Bullet;
 
         public CharacterModel(

@@ -28,8 +28,7 @@ namespace DefenseWar.Core
         [SerializeField] private Transform starTransform;
         [SerializeField] private GameObject characterObject;
 
-        [SerializeField] private Transform enemyTransform;
-        [SerializeField] private GameObject arrow;
+        [SerializeField] public Transform enemyTransform;
 
         public float attackSpeed;
         private float timeBtwAttack;
@@ -48,44 +47,20 @@ namespace DefenseWar.Core
         // Update is called once per frame
         void Update()
         {
-            var skeletonAnimation = transform.GetComponentInChildren<SkeletonAnimation>();
+            var animator = transform.GetComponentInChildren<Animator>();
 
-            if (skeletonAnimation == null || enemyTransform.childCount == 0) return;
+            if (animator == null || enemyTransform.childCount == 0) return;
 
             if (timeBtwAttack <= 0)
             {
-                Spine.TrackEntry trackEntry = skeletonAnimation.AnimationState.SetAnimation((int)AnimationStateEnum.Attack, "attack_char", false);
-                var animTrack = skeletonAnimation.state.AddAnimation((int)AnimationStateEnum.Attack, "idle", false, 0f);
-
-                animTrack.Complete += delegate (TrackEntry trackEntry)
-                {
-                    skeletonAnimation.AnimationState.SetAnimation((int)AnimationStateEnum.Idle, "idle", true);
-                };
-                //trackEntry.AnimationTime = 1.5f;
-                //skeletonAnimation.AnimationState.AddAnimation(0, "idle", true, 0.8f);
-
-                StartCoroutine(OnAttackAnimComplete(trackEntry));
-                timeBtwAttack = attackSpeed + trackEntry.AnimationEnd;
+                animator.SetBool("IsAttack", true);
+                timeBtwAttack = attackSpeed;
             }
             else
             {
                 timeBtwAttack -= Time.deltaTime;
             }
 
-        }
-
-        private IEnumerator OnAttackAnimComplete(TrackEntry trackEntry)
-        {
-            yield return new WaitForSeconds(trackEntry.AnimationEnd/2.5f);
-            var arrowObject = Instantiate(arrow, transform);
-            var dir = enemyTransform.GetChild(0).position - arrowObject.transform.position;
-            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 180 + 37;
-            arrowObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            var target = enemyTransform.GetChild(0).position;
-            arrowObject.transform.DOMove(target, 1f).OnComplete(() =>
-            {
-                Destroy(arrowObject);
-            });
         }
 
         public (CharacterModel, int) ReturnValue()
